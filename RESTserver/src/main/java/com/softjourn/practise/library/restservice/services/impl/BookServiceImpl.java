@@ -59,6 +59,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getByName(String name) {
+        name += "%";
+
         return bookRepository.findByName(name);
     }
 }

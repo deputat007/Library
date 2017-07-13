@@ -56,6 +56,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<Author> getByFirstName(String firstName) {
         firstName += "%";
+
         return authorRepository.findByFirstName(firstName);
     }
 }

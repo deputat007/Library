@@ -60,6 +60,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public List<Genre> getByName(String name) {
         name += "%";
+
         return genreRepository.findByName(name);
     }
 }
