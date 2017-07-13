@@ -7,6 +7,7 @@ import com.softjourn.practise.library.restservice.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
     public Author getAuthor(int id) throws EntityNotFoundException {
         Author author = authorRepository.findOne(id);
 
-        if (author == null) {
+        if (author == null || author.getDeleted() != null) {
             throw new EntityNotFoundException(String.format("Author with id(%d) not found", id));
         }
 
@@ -30,7 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     public List<Author> getAuthors() {
-        return authorRepository.findAll();
+        return authorRepository.getAll();
     }
 
     public void addAuthor(Author author) {
@@ -38,18 +39,23 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     public void updateAuthor(Author author) throws EntityNotFoundException {
-        Author existingAuthor = getAuthor(author.getId());
+        if (getAuthor(author.getId()) != null) {
+            author.setModified(new Date(System.currentTimeMillis()));
 
-        existingAuthor.setFirstName(author.getFirstName());
-        existingAuthor.setLastName(author.getLastName());
-        existingAuthor.setBirthday(author.getBirthday());
+            authorRepository.save(author);
+        }
+    }
+
+    public void deleteAuthor(int id) throws EntityNotFoundException {
+        Author existingAuthor = getAuthor(id);
+        existingAuthor.setDeleted(new Date(System.currentTimeMillis()));
 
         authorRepository.save(existingAuthor);
     }
 
-    public void deleteAuthor(Author author) throws EntityNotFoundException {
-        Author existingAuthor = getAuthor(author.getId());
-
-        authorRepository.delete(existingAuthor);
+    @Override
+    public List<Author> getByFirstName(String firstName) {
+        firstName += "%";
+        return authorRepository.findByFirstName(firstName);
     }
 }

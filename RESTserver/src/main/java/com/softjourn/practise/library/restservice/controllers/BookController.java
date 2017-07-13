@@ -1,9 +1,9 @@
 package com.softjourn.practise.library.restservice.controllers;
 
 
-import com.softjourn.practise.library.entities.Author;
+import com.softjourn.practise.library.entities.Book;
 import com.softjourn.practise.library.restservice.exceptions.EntityNotFoundException;
-import com.softjourn.practise.library.restservice.services.impl.AuthorServiceImpl;
+import com.softjourn.practise.library.restservice.services.impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/author")
-public class AuthorController {
+@RequestMapping(value = "/api/book")
+public class BookController {
 
-    private AuthorServiceImpl authorService;
+    private BookServiceImpl bookService;
 
     @Autowired
-    public AuthorController(AuthorServiceImpl authorService) {
-        this.authorService = authorService;
+    public BookController(BookServiceImpl bookService) {
+        this.bookService = bookService;
     }
 
     @RequestMapping(
@@ -28,8 +28,8 @@ public class AuthorController {
             value = "/",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        return ResponseEntity.ok(authorService.getAuthors());
+    public ResponseEntity<List<Book>> getAllBooks() {
+        return ResponseEntity.ok(bookService.getBooks());
     }
 
     @RequestMapping(
@@ -37,9 +37,9 @@ public class AuthorController {
             value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> getAuthor(@PathVariable int id) {
+    public ResponseEntity<?> getBook(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(authorService.getAuthor(id), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.getBook(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -50,8 +50,8 @@ public class AuthorController {
             value = "/",
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> addAuthor(@RequestBody Author author) {
-        authorService.addAuthor(author);
+    public ResponseEntity<?> addBook(@RequestBody Book book) {
+        bookService.addBook(book);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -61,9 +61,9 @@ public class AuthorController {
             value = "/",
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> updateAuthor(@RequestBody Author author) {
+    public ResponseEntity<?> updateBook(@RequestBody Book book) {
         try {
-            authorService.updateAuthor(author);
+            bookService.updateBook(book);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -75,9 +75,9 @@ public class AuthorController {
             value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> deleteAuthor(@PathVariable int id) {
+    public ResponseEntity<?> deleteBook(@PathVariable int id) {
         try {
-            authorService.deleteAuthor(id);
+            bookService.deleteBook(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -86,11 +86,10 @@ public class AuthorController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/firstName/{firstName}",
+            value = "/name/{name}",
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> getByFirstName(@PathVariable String firstName) {
-        return new ResponseEntity<>(authorService.getByFirstName(firstName), HttpStatus.OK);
-
+    public ResponseEntity<?> getByName(@PathVariable String name) {
+        return new ResponseEntity<>(bookService.getByName(name), HttpStatus.OK);
     }
 }

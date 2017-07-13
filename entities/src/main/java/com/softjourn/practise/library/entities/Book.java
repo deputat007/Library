@@ -1,5 +1,7 @@
 package com.softjourn.practise.library.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -13,7 +15,7 @@ public class Book implements Serializable {
     private static final long serialVersionUID = -5527566248002296042L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -29,31 +31,43 @@ public class Book implements Serializable {
     @Column(name = "page_count")
     private int pageCount;
 
-    @ManyToOne(targetEntity = Publisher.class)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
     @Column(name = "publish_year")
     private Date publishYear;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "image")
     private String imageUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_book_authors", joinColumns = {
             @JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")})
     private Set<Author> authors = new HashSet<Author>(0);
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_book_genres", joinColumns = {
             @JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})
     private Set<Genre> genres = new HashSet<Genre>(0);
+
+    @Column(name = "created")
+    @JsonIgnore
+    private Date created;
+
+    @Column(name = "modified")
+    @JsonIgnore
+    private Date modified;
+
+    @Column(name = "deleted")
+    @JsonIgnore
+    private Date deleted;
 
     public Book() {
     }
@@ -159,6 +173,30 @@ public class Book implements Serializable {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public Date getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Date deleted) {
+        this.deleted = deleted;
     }
 
     @Override

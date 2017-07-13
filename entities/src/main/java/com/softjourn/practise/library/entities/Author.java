@@ -1,5 +1,7 @@
 package com.softjourn.practise.library.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -12,7 +14,7 @@ public class Author implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "first_name")
@@ -23,6 +25,18 @@ public class Author implements Serializable {
 
     @Column(name = "birthday")
     private Date birthday;
+
+    @Column(name = "created")
+    @JsonIgnore
+    private Date created;
+
+    @Column(name = "modified")
+    @JsonIgnore
+    private Date modified;
+
+    @Column(name = "deleted")
+    @JsonIgnore
+    private Date deleted;
 
     public Author() {
     }
@@ -64,6 +78,30 @@ public class Author implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public Date getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Date deleted) {
+        this.deleted = deleted;
     }
 
     @Override

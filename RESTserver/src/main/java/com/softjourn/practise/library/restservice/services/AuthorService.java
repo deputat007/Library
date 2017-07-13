@@ -16,5 +16,7 @@ public interface AuthorService {
 
     void updateAuthor(Author author) throws EntityNotFoundException;
 
-    void deleteAuthor(Author author) throws EntityNotFoundException;
+    void deleteAuthor(int id) throws EntityNotFoundException;
+
+    List<Author> getByFirstName(String firstName);
 }

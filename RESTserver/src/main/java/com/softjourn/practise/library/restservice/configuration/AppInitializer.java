@@ -9,7 +9,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{ DataSourceConfig.class, WebConfig.class };
+        return new Class[]{DataSourceConfig.class, WebConfig.class, SecurityConfig.class};
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
-        return new Filter[] { characterEncodingFilter};
+        return new Filter[]{characterEncodingFilter};
     }
 
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 
 @Entity
 @Table(name = "tbl_user")
@@ -13,19 +14,30 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "user_name")
     private String userName;
 
-    @ManyToOne(targetEntity = Role.class)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_role_id")
     private Role role;
 
-    @JsonIgnore
     @Column(name = "password")
     private String password;
+
+    @Column(name = "created")
+    @JsonIgnore
+    private Date created;
+
+    @Column(name = "modified")
+    @JsonIgnore
+    private Date modified;
+
+    @Column(name = "deleted")
+    @JsonIgnore
+    private Date deleted;
 
     public User() {
     }
@@ -67,6 +79,30 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public Date getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Date deleted) {
+        this.deleted = deleted;
     }
 
     @Override
