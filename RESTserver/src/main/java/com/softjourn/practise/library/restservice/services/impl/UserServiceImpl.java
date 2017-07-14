@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int id) throws EntityNotFoundException {
+    public User getById(int id) throws EntityNotFoundException {
         User user = userRepository.findOne(id);
 
         if (user == null || user.getDeleted() != null) {
@@ -43,19 +43,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getAll() {
         return userRepository.getAll();
     }
 
     @Override
-    public void addUser(User user) {
+    public void add(User user) {
         user.setPassword(encodePassword(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
-    public void updateUser(User user) throws EntityNotFoundException {
-        if (getUser(user.getId()) != null) {
+    public void update(User user) throws EntityNotFoundException {
+        if (getById(user.getId()) != null) {
             user.setModified(new Date(System.currentTimeMillis()));
 
             userRepository.save(user);
@@ -63,8 +63,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int id) throws EntityNotFoundException {
-        User existingUser = getUser(id);
+    public void delete(int id) throws EntityNotFoundException {
+        User existingUser = getById(id);
 
         existingUser.setDeleted(new Date(System.currentTimeMillis()));
 
@@ -72,10 +72,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByName(String name) {
+    public User findByName(String name) {
         name += "%";
 
         return userRepository.findByName(name);
+    }
+
+    @Override
+    public User getByName(String name) {
+        return userRepository.getByName(name);
     }
 
     @Override

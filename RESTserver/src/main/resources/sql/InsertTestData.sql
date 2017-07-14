@@ -12,8 +12,8 @@ DELETE FROM tbl_role;
 INSERT INTO tbl_role (role_name) VALUES ('admin');
 INSERT INTO tbl_role (role_name) VALUES ('user');
 
-INSERT INTO tbl_user (user_name, password, user_role_id) VALUES ('deputat', '547e177201f1e8979f3b6b8c80689bbb', 1);
-INSERT INTO tbl_user (user_name, password, user_role_id) VALUES ('test', '098f6bcd4621d373cade4e832627b4f6', 2);
+INSERT INTO tbl_user (user_name, password, user_role_id) VALUES ('deputat', '547E177201F1E8979F3B6B8C80689BBB', 1);
+INSERT INTO tbl_user (user_name, password, user_role_id) VALUES ('test', '098F6BCD4621D373CADE4E832627B4F6', 2);
 
 INSERT INTO tbl_publisher (name) VALUES ('Pearson');
 INSERT INTO tbl_publisher (name) VALUES ('ThomsonReuters');

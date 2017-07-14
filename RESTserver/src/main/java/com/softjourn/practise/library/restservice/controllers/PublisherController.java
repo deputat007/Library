@@ -29,7 +29,7 @@ public class PublisherController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<List<Publisher>> getAllPublisher() {
-        return ResponseEntity.ok(publisherService.getPublishers());
+        return ResponseEntity.ok(publisherService.getAll());
     }
 
     @RequestMapping(
@@ -39,7 +39,7 @@ public class PublisherController {
     )
     public ResponseEntity<?> getGenre(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(publisherService.getPublisher(id), HttpStatus.OK);
+            return new ResponseEntity<>(publisherService.getById(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -51,7 +51,7 @@ public class PublisherController {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> addPublisher(@RequestBody Publisher publisher) {
-        publisherService.addPublisher(publisher);
+        publisherService.add(publisher);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class PublisherController {
     )
     public ResponseEntity<?> updatePublisher(@RequestBody Publisher publisher) {
         try {
-            publisherService.updatePublisher(publisher);
+            publisherService.update(publisher);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class PublisherController {
     )
     public ResponseEntity<?> deletePublisher(@PathVariable int id) {
         try {
-            publisherService.deletePublisher(id);
+            publisherService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

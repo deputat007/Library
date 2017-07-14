@@ -6,17 +6,7 @@ import com.softjourn.practise.library.restservice.exceptions.EntityNotFoundExcep
 import java.util.List;
 
 
-public interface GenreService {
-
-    Genre getGenre(int id) throws EntityNotFoundException;
-
-    List<Genre> getGenres();
-
-    void addGenre(Genre genre);
-
-    void updateGenre(Genre genre) throws EntityNotFoundException;
-
-    void deleteGenre(int id) throws EntityNotFoundException;
+public interface GenreService extends CrudOperation<Genre> {
 
     List<Genre> getByName(String name);
 }

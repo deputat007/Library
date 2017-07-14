@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRole(int id) throws EntityNotFoundException {
+    public Role getById(int id) throws EntityNotFoundException {
         Role role = roleRepository.findOne(id);
 
         if (role == null || role.getDeleted() != null) {
@@ -33,18 +33,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<Role> getAll() {
         return roleRepository.getAll();
     }
 
     @Override
-    public void addRole(Role role) {
+    public void add(Role role) {
         roleRepository.save(role);
     }
 
     @Override
-    public void updateRole(Role role) throws EntityNotFoundException {
-        if (getRole(role.getId()) != null) {
+    public void update(Role role) throws EntityNotFoundException {
+        if (getById(role.getId()) != null) {
             role.setModified(new Date(System.currentTimeMillis()));
 
             roleRepository.save(role);
@@ -52,8 +52,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteRole(int id) throws EntityNotFoundException {
-        Role existingRole = getRole(id);
+    public void delete(int id) throws EntityNotFoundException {
+        Role existingRole = getById(id);
 
         existingRole.setDeleted(new Date(System.currentTimeMillis()));
 

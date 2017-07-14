@@ -20,7 +20,8 @@ public class AuthorServiceImpl implements AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public Author getAuthor(int id) throws EntityNotFoundException {
+    @Override
+    public Author getById(int id) throws EntityNotFoundException {
         Author author = authorRepository.findOne(id);
 
         if (author == null || author.getDeleted() != null) {
@@ -30,24 +31,28 @@ public class AuthorServiceImpl implements AuthorService {
         return author;
     }
 
-    public List<Author> getAuthors() {
+    @Override
+    public List<Author> getAll() {
         return authorRepository.getAll();
     }
 
-    public void addAuthor(Author author) {
+    @Override
+    public void add(Author author) {
         authorRepository.save(author);
     }
 
-    public void updateAuthor(Author author) throws EntityNotFoundException {
-        if (getAuthor(author.getId()) != null) {
+    @Override
+    public void update(Author author) throws EntityNotFoundException {
+        if (getById(author.getId()) != null) {
             author.setModified(new Date(System.currentTimeMillis()));
 
             authorRepository.save(author);
         }
     }
 
-    public void deleteAuthor(int id) throws EntityNotFoundException {
-        Author existingAuthor = getAuthor(id);
+    @Override
+    public void delete(int id) throws EntityNotFoundException {
+        Author existingAuthor = getById(id);
         existingAuthor.setDeleted(new Date(System.currentTimeMillis()));
 
         authorRepository.save(existingAuthor);

@@ -21,7 +21,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre getGenre(int id) throws EntityNotFoundException {
+    public Genre getById(int id) throws EntityNotFoundException {
         Genre genre = genreRepository.findOne(id);
 
         if (genre == null || genre.getDeleted() != null) {
@@ -32,26 +32,26 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> getGenres() {
+    public List<Genre> getAll() {
         return genreRepository.getAll();
     }
 
     @Override
-    public void addGenre(Genre genre) {
+    public void add(Genre genre) {
         genreRepository.save(genre);
     }
 
     @Override
-    public void updateGenre(Genre genre) throws EntityNotFoundException {
-        if (getGenre(genre.getId()) != null) {
+    public void update(Genre genre) throws EntityNotFoundException {
+        if (getById(genre.getId()) != null) {
             genre.setModified(new Date(System.currentTimeMillis()));
             genreRepository.save(genre);
         }
     }
 
     @Override
-    public void deleteGenre(int id) throws EntityNotFoundException {
-        Genre existingGenre = getGenre(id);
+    public void delete(int id) throws EntityNotFoundException {
+        Genre existingGenre = getById(id);
         existingGenre.setDeleted(new Date(System.currentTimeMillis()));
 
         genreRepository.save(existingGenre);

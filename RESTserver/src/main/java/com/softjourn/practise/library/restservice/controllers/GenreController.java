@@ -29,7 +29,7 @@ public class GenreController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<List<Genre>> getAllGenres() {
-        return ResponseEntity.ok(genreService.getGenres());
+        return ResponseEntity.ok(genreService.getAll());
     }
 
     @RequestMapping(
@@ -39,7 +39,7 @@ public class GenreController {
     )
     public ResponseEntity<?> getGenre(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(genreService.getGenre(id), HttpStatus.OK);
+            return new ResponseEntity<>(genreService.getById(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -51,7 +51,7 @@ public class GenreController {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> addGenre(@RequestBody Genre genre) {
-        genreService.addGenre(genre);
+        genreService.add(genre);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class GenreController {
     )
     public ResponseEntity<?> updateGenre(@RequestBody Genre genre) {
         try {
-            genreService.updateGenre(genre);
+            genreService.update(genre);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class GenreController {
     )
     public ResponseEntity<?> deleteGenre(@PathVariable int id) {
         try {
-            genreService.deleteGenre(id);
+            genreService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

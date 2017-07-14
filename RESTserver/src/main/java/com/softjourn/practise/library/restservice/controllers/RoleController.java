@@ -29,7 +29,7 @@ public class RoleController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<List<Role>> getAllRoles() {
-        return ResponseEntity.ok(roleService.getRoles());
+        return ResponseEntity.ok(roleService.getAll());
     }
 
     @RequestMapping(
@@ -39,7 +39,7 @@ public class RoleController {
     )
     public ResponseEntity<?> getRole(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(roleService.getRole(id), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.getById(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -51,7 +51,7 @@ public class RoleController {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> addRole(@RequestBody Role role) {
-        roleService.addRole(role);
+        roleService.add(role);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class RoleController {
     )
     public ResponseEntity<?> updateRole(@RequestBody Role role) {
         try {
-            roleService.updateRole(role);
+            roleService.update(role);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class RoleController {
     )
     public ResponseEntity<?> deleteRole(@PathVariable int id) {
         try {
-            roleService.deleteRole(id);
+            roleService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

@@ -6,17 +6,7 @@ import com.softjourn.practise.library.restservice.exceptions.EntityNotFoundExcep
 import java.util.List;
 
 
-public interface PublisherService {
-
-    Publisher getPublisher(int id) throws EntityNotFoundException;
-
-    List<Publisher> getPublishers();
-
-    void addPublisher(Publisher publisher);
-
-    void updatePublisher(Publisher publisher) throws EntityNotFoundException;
-
-    void deletePublisher(int id) throws EntityNotFoundException;
+public interface PublisherService extends CrudOperation<Publisher> {
 
     List<Publisher> getByName(String name);
 }

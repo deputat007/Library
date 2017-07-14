@@ -21,7 +21,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBook(int id) throws EntityNotFoundException {
+    public Book getById(int id) throws EntityNotFoundException {
         Book book = bookRepository.findOne(id);
 
         if (book == null || book.getDeleted() != null) {
@@ -32,26 +32,26 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBooks() {
+    public List<Book> getAll() {
         return bookRepository.getAll();
     }
 
     @Override
-    public void addBook(Book book) {
+    public void add(Book book) {
         bookRepository.save(book);
     }
 
     @Override
-    public void updateBook(Book book) throws EntityNotFoundException {
-        if (getBook(book.getId()) != null) {
+    public void update(Book book) throws EntityNotFoundException {
+        if (getById(book.getId()) != null) {
             book.setModified(new Date(System.currentTimeMillis()));
             bookRepository.save(book);
         }
     }
 
     @Override
-    public void deleteBook(int id) throws EntityNotFoundException {
-        Book book = getBook(id);
+    public void delete(int id) throws EntityNotFoundException {
+        Book book = getById(id);
         book.setDeleted(new Date(System.currentTimeMillis()));
 
         bookRepository.save(book);

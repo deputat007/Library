@@ -29,7 +29,7 @@ public class UserController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getUsers());
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @RequestMapping(
@@ -39,7 +39,7 @@ public class UserController {
     )
     public ResponseEntity<?> getUser(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -52,7 +52,7 @@ public class UserController {
     )
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         try {
-            userService.updateUser(user);
+            userService.update(user);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -66,7 +66,7 @@ public class UserController {
     )
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         try {
-            userService.deleteUser(id);
+            userService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -79,6 +79,6 @@ public class UserController {
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> getByName(@PathVariable String name) {
-        return new ResponseEntity<>(userService.getByName(name), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findByName(name), HttpStatus.OK);
     }
 }

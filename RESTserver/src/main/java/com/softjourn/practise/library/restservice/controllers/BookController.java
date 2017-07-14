@@ -29,7 +29,7 @@ public class BookController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<List<Book>> getAllBooks() {
-        return ResponseEntity.ok(bookService.getBooks());
+        return ResponseEntity.ok(bookService.getAll());
     }
 
     @RequestMapping(
@@ -39,7 +39,7 @@ public class BookController {
     )
     public ResponseEntity<?> getBook(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(bookService.getBook(id), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.getById(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -51,7 +51,7 @@ public class BookController {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> addBook(@RequestBody Book book) {
-        bookService.addBook(book);
+        bookService.add(book);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class BookController {
     )
     public ResponseEntity<?> updateBook(@RequestBody Book book) {
         try {
-            bookService.updateBook(book);
+            bookService.update(book);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class BookController {
     )
     public ResponseEntity<?> deleteBook(@PathVariable int id) {
         try {
-            bookService.deleteBook(id);
+            bookService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

@@ -29,7 +29,7 @@ public class AuthorController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<List<Author>> getAllAuthors() {
-        return ResponseEntity.ok(authorService.getAuthors());
+        return ResponseEntity.ok(authorService.getAll());
     }
 
     @RequestMapping(
@@ -39,7 +39,7 @@ public class AuthorController {
     )
     public ResponseEntity<?> getAuthor(@PathVariable int id) {
         try {
-            return new ResponseEntity<>(authorService.getAuthor(id), HttpStatus.OK);
+            return new ResponseEntity<>(authorService.getById(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -51,7 +51,7 @@ public class AuthorController {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> addAuthor(@RequestBody Author author) {
-        authorService.addAuthor(author);
+        authorService.add(author);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class AuthorController {
     )
     public ResponseEntity<?> updateAuthor(@RequestBody Author author) {
         try {
-            authorService.updateAuthor(author);
+            authorService.update(author);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class AuthorController {
     )
     public ResponseEntity<?> deleteAuthor(@PathVariable int id) {
         try {
-            authorService.deleteAuthor(id);
+            authorService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

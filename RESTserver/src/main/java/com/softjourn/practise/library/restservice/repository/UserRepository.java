@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select a from User a where a.userName like :userName and a.deleted is null")
     User findByName(@Param("userName") String userName);
+
+    @Query("select a from User a where a.userName = :userName and a.deleted is null")
+    User getByName(@Param("userName") String userName);
 }

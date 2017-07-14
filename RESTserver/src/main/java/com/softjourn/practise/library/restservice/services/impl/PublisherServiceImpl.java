@@ -22,7 +22,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public Publisher getPublisher(int id) throws EntityNotFoundException {
+    public Publisher getById(int id) throws EntityNotFoundException {
         Publisher publisher = publisherRepository.findOne(id);
 
         if (publisher == null || publisher.getDeleted() != null) {
@@ -33,18 +33,18 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public List<Publisher> getPublishers() {
+    public List<Publisher> getAll() {
         return publisherRepository.getAll();
     }
 
     @Override
-    public void addPublisher(Publisher publisher) {
+    public void add(Publisher publisher) {
         publisherRepository.save(publisher);
     }
 
     @Override
-    public void updatePublisher(Publisher publisher) throws EntityNotFoundException {
-        if (getPublisher(publisher.getId()) != null) {
+    public void update(Publisher publisher) throws EntityNotFoundException {
+        if (getById(publisher.getId()) != null) {
             publisher.setModified(new Date(System.currentTimeMillis()));
 
             publisherRepository.save(publisher);
@@ -52,8 +52,8 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public void deletePublisher(int id) throws EntityNotFoundException {
-        Publisher publisher = getPublisher(id);
+    public void delete(int id) throws EntityNotFoundException {
+        Publisher publisher = getById(id);
         publisher.setDeleted(new Date(System.currentTimeMillis()));
 
         publisherRepository.save(publisher);

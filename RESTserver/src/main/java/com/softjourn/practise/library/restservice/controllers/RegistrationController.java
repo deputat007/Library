@@ -39,7 +39,7 @@ public class RegistrationController {
                     HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        userService.addUser(user);
+        userService.add(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

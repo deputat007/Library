@@ -29,14 +29,14 @@ public class LoginController {
     )
     public ResponseEntity<?> getUser(@RequestParam String login, @RequestParam String password) {
         try {
-            User user = userService.getByName(login);
+            User user = userService.findByName(login);
             if (user == null) {
                 throw new BadCredentialsException("Invalid login");
             }
             if (!user.getPassword().equals(userService.encodePassword(password))) {
                 throw new BadCredentialsException("Wrong password");
             }
-            return new ResponseEntity<>(userService.getByName(login), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findByName(login), HttpStatus.OK);
         } catch (BadCredentialsException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
